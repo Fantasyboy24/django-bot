@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Django Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <form action="{{ url_for('ask_bot') }}" method="POST">
+      <input type="text" name="input" placeholder="Type your message here...">
+      <button type="submit">Send</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $('form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: $(this).attr('action'),
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(data) {
+            $('#response').text(data.response);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
